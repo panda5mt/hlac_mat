@@ -2,7 +2,8 @@
 HLAC(高次局所自己相関)の位置不変性と加法性の確認
 
 やればやるほど深層学習が嫌いになるので、精神安定剤としての高次局所自己相関プレイグラウンド
-
+## 元ネタ
+[世界一やさしいHLAC入門！(間違い探し編)](https://zenn.dev/kotaro_inoue/articles/f0cbbca962313b)
 
 ## 使い方
 [hlac_main](./hlac_main.m)をMATLAB/MATLAB onlineで実行する
