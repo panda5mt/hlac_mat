@@ -7,7 +7,8 @@ HLAC(高次局所自己相関)の位置不変性と加法性の確認
 こちらをMATLAB用に書きなおしたもの
 
 ## 使い方
-[hlac_main](./hlac_main.m)をMATLAB/MATLAB onlineで実行する
+[hlac_main](./hlac_main.m)をMATLAB/MATLAB onlineで実行する。
+
 下記Figureが出現する。
 
 グラフは、犬画像(dog1)、位置が異なる犬画像(dog2)、猫画像(cat)、マージ画像(dogcat)それぞれのHLAC特徴をグラフ化したものである。
