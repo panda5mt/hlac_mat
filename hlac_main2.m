@@ -2,20 +2,11 @@
 close all;
 clc;
 
-% 注意:この方法(addpath)を使うとMATLAB Mobile(iOS)で動作しない
-% またMATLAB Compilerでのaddpathは推奨されていないので使わないほうが良い
-% % imgフォルダをMATLABPATH(path())に追加
-% foldername = 'img';
-% dir_org = pwd;
-% fpath = fullfile(dir_org,foldername);
-% if (~contains(path(),fpath) && ~isdeployed)
-%     addpath(fpath);
-% end
-
-% WikipediaのPNGはインデックス付きの画像の模様
-% 少し工夫が必要
+% Wikipediaの'Spot_the_difference.png'はインデックス付きの画像
+% カラーマップの復元が必要となる
 [img,cmap] = imread('./img/Spot_the_difference.png');
 img = ind2rgb(img, cmap); % rgbに変換
+%img = imread('./img/saize_gekimuzu.jpg');
 
 % サイズ取得
 colsize = size(img,1); % 縦サイズ
