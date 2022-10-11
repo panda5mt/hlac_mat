@@ -1,19 +1,19 @@
 function batches = split_into_baches(img, nx, ny)
-%SPLIT_INTO_BATCHES 画像データの分割をする(nx x ny 個に分割する)
+%SPLIT_INTO_BATCHES 画像データの分割をする(画像データimgを(ny,nx)等分に分割する)
 %
-% num_matches = extract_hlac(img,hlac_filters)
+% batches = split_into_baches(img, nx, ny)
 %     
 % Parameters
 % ----------
 % i㎎ : vector
 %   画像データ(グレースケールか2値)
-% hlac_filters : cell
-%   フィルタである数値配列(3次元と仮定) 
+% nx,ny : numeric(imgを縦にny分割、横にnx分割する)
+%    
 % 
 % Returns
 % -------
-% num_matches : vector(numeric)
-%   マスク(フィルタ)との一致回数
+% batches : vector(numeric)
+%   分割後の画像配列
     
     batches = [];
     
