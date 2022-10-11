@@ -1,10 +1,11 @@
 %% 2値HLACテストコード
 close all;
 clc;
-img_dog1 = uint8(imread("dog1.png"));
-img_dog2 = uint8(imread("dog2.png"));
-img_cat = uint8(imread("cat.png"));
-img_mer = uint8(imread("merge.png"));
+
+img_dog1 = uint8(imread('./img/dog1.png'));
+img_dog2 = uint8(imread('./img/dog2.png'));
+img_cat = uint8(imread('./img/cat.png'));
+img_mer = uint8(imread('./img/merge.png'));
 % 2値化する
 dog1_bin = rgb2gray(img_dog1) > 127; 
 dog2_bin = rgb2gray(img_dog2) > 127;
@@ -53,19 +54,19 @@ x = 1:size(dog1_hlac,2);
 
 tiledlayout(2,4);
 nexttile
-imshow('dog1.png')
+imshow(img_dog1)
 title('dog1');
 
 nexttile 
-imshow('dog2.png')
+imshow(img_dog2)
 title('dog2');
 
 nexttile(5) 
-imshow('cat.png')
+imshow(img_cat)
 title('cat');
 
 nexttile(6) 
-imshow('merge.png')
+imshow(img_mer)
 title('dogcat');
 
 nexttile(3,[2 2])
