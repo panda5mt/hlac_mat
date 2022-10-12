@@ -36,10 +36,9 @@ hlac_filters = { ...
 % Wikipediaの'Spot_the_difference.png'はインデックス付きの画像
 % カラーマップの復元が必要となる
 [img,cmap] = imread('./img/Spot_the_difference.png');
+img = (ind2rgb(img, cmap)); % rgbに変換
 
-img = uint8(ind2rgb(img, cmap)) .* 255; % rgbに変換
-
-%img = uint8(imread('./img/saize_gekimuzu.jpg'));
+%img = double(imread('./img/saize_gekimuzu.jpg')./255);
 
 % サイズ取得
 colsize = size(img,1); % 縦サイズ
@@ -51,13 +50,14 @@ tar_img = img(1:colsize, (uint16(rowsize/2) + 1):rowsize, :);
 
 
 % 2値化する
-% todo: OTSUの手法に直すこと
-ref_bin = ((rgb2gray(ref_img)) > 25); 
-tar_bin = ((rgb2gray(tar_img)) > 25); 
+ncl = 2; % 1~3
+ref_bin = ref_img(:,:,ncl) > graythresh(ref_img(:,:,ncl)) ; 
+tar_bin = tar_img(:,:,ncl) > graythresh(tar_img(:,:,ncl)) ; 
+
 
 %% HLAC特徴量を求める
-nx = 20;
-ny = 20;
+nx = 30;
+ny = 30;
 ref_hlac = extract_batchwise_hlac(ref_bin,hlac_filters, nx, ny);
 tar_hlac = extract_batchwise_hlac(tar_bin,hlac_filters, nx, ny);
 
@@ -123,7 +123,7 @@ im = image('CData',img,'XData',[1 ax.XLim],'YData',[1 ax.YLim]);
 im.AlphaData = 0.5;
 hold on
 p = 1;
-th = 0.0024;
+th = 0.08;
 for y=1:y_each:y_lim
     for x=1:x_each:x_lim
         angle = real(hlac_angles(p));
