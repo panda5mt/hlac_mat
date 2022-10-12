@@ -67,9 +67,15 @@ tar_X = 1:size(tar_hlac, 2);
 tar_Y = 1:size(tar_hlac, 1);
 tar_Z = tar_hlac(tar_Y,tar_X);
 
+%% 内積を求める
+hlac_angles = [];
+for i=ref_Y
+    ha = vector_angle(ref_hlac(i,:), tar_hlac(i,:), 1e-6);
+    hlac_angles = [hlac_angles ha]; 
+end
 
 %% 描画
-tiledlayout(1,3);
+tiledlayout(2,3);
 nexttile
 contourf(ref_X,ref_Y,ref_Z);
 title('reference');
@@ -81,6 +87,9 @@ title('target');
 nexttile
 contourf(tar_X,tar_Y,tar_Z-ref_Z);
 title('difference');
+
+nexttile
+plot(ref_Y,hlac_angles);
 
 % figure(1);
 % tiledlayout(1,2);
