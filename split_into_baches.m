@@ -28,7 +28,7 @@ function batches = split_into_baches(img, nx, ny)
     x_size = each_x * nx;
     y_size = each_y * ny;
     
-
+    img = imresize(img, [y_size x_size]);
 
     % バッチの領域を確保(3次元)
     batches = zeros(each_y,each_x,(nx * ny));
@@ -42,6 +42,8 @@ function batches = split_into_baches(img, nx, ny)
             y_end = (y + each_y - 1);
             
             c_img = img(y:y_end, x:x_end); 
+%             imshow(c_img);
+%             pause(1)
             batches(:,:,i) = c_img;
             i = i + 1;
         end

@@ -36,7 +36,8 @@ hlac_filters = { ...
 % Wikipediaの'Spot_the_difference.png'はインデックス付きの画像
 % カラーマップの復元が必要となる
 [img,cmap] = imread('./img/Spot_the_difference.png');
-img = uint8(ind2rgb(img, cmap)) * 255; % rgbに変換
+
+img = uint8(ind2rgb(img, cmap)) .* 255; % rgbに変換
 
 %img = uint8(imread('./img/saize_gekimuzu.jpg'));
 
@@ -51,12 +52,14 @@ tar_img = img(1:colsize, (uint16(rowsize/2) + 1):rowsize, :);
 
 % 2値化する
 % todo: OTSUの手法に直すこと
-ref_bin = ((rgb2gray(ref_img)) > 127); 
-tar_bin = ((rgb2gray(tar_img)) > 127); 
+ref_bin = ((rgb2gray(ref_img)) > 25); 
+tar_bin = ((rgb2gray(tar_img)) > 25); 
 
 %% HLAC特徴量を求める
-ref_hlac = extract_batchwise_hlac(ref_bin,hlac_filters,20,20);
-tar_hlac = extract_batchwise_hlac(tar_bin,hlac_filters,20,20);
+nx = 20;
+ny = 20;
+ref_hlac = extract_batchwise_hlac(ref_bin,hlac_filters, nx, ny);
+tar_hlac = extract_batchwise_hlac(tar_bin,hlac_filters, nx, ny);
 
 % グラフ描画用パラメータの用意
 ref_X = 1:size(ref_hlac, 2);
@@ -75,7 +78,7 @@ for i=ref_Y
 end
 
 %% 描画
-tiledlayout(2,3);
+tiledlayout(2,5);
 nexttile
 contourf(ref_X,ref_Y,ref_Z);
 title('reference');
@@ -85,18 +88,61 @@ contourf(tar_X,tar_Y,tar_Z);
 title('target');
 
 nexttile
-contourf(tar_X,tar_Y,tar_Z-ref_Z);
+contourf(tar_X,tar_Y,abs(tar_Z-ref_Z));
 title('difference');
 
-nexttile
+nexttile(7)
+imshow(ref_bin);
+title('reference');
+
+nexttile(8)
+imshow(tar_bin);
+title('target');
+
+
+nexttile(6)
 plot(ref_Y,real(hlac_angles));
 
+nexttile(4,[2 2])
+%colsize; % 縦サイズ
+%rowsize; % 横サイズ
+ax = gca;
+ax.XDir = 'normal';
+ax.YDir = 'reverse';
+img =  tar_img ;
+batches = split_into_baches(img, nx, ny);
+
+x_each = size(batches,2);
+y_each = size(batches,1);
+x_lim  = x_each * nx;
+y_lim  = y_each * ny;
+
+ax.XLim = [1 x_lim];
+ax.YLim = [1 y_lim];
+im = image('CData',img,'XData',[1 ax.XLim],'YData',[1 ax.YLim]);
+im.AlphaData = 0.5;
+hold on
+p = 1;
+th = 0.0024;
+for y=1:y_each:y_lim
+    for x=1:x_each:x_lim
+        angle = real(hlac_angles(p));
+        
+        if angle > th
+            r = rectangle('Position',[x y x_each y_each]);
+            if(angle <= 1 )
+                r.FaceColor = [0 angle 0 0.7];
+            else
+                r.FaceColor = [0 1 0 0.7];
+            end
+            r.EdgeColor = 'b';
+            r.LineWidth = 1;
+            
+        end
+        p = p + 1;
+    end
+end
+
+hold off
 % figure(1);
 % tiledlayout(1,2);
-% nexttile
-% imshow(ref_bin);
-% title('reference');
-% 
-% nexttile
-% imshow(tar_bin);
-% title('target');
