@@ -27,10 +27,14 @@ HLAC(高次局所自己相関)の位置不変性と加法性の確認
 
 
 2. 2値HLACによる間違い探しの実装
-
-    [hlac_main2.m](./hlac_main2.m)をMATLAB/MATLAB onlineで実行する．
-    下記グラフが出現する．
-    ReferenceおよびTargetのHLAC特徴量と差分，また，その内積を求めた際の位相差である．位相差が大きい(=間違い探しの答えである確率が大きい)所を，右図に示した．
-    ![](img/scr2.png)
     
+    間違い探しの画像は[Wikipedia](https://en.wikipedia.org/wiki/Spot_the_difference)からの引用である．
+    [hlac_main2.m](./hlac_main2.m)をMATLAB/MATLAB onlineで実行する．
+
+    下記グラフが出現する．
+    
+    ![](img/scr2.png)
+    上記グラフは間違い探し画像のReferenceおよびTargetのHLAC特徴量と差分，また，その内積を求めた際の位相差である．位相差が大きい(=間違い探しの答えである確率が大きい)所を，右図に示した．
+    
+
     
