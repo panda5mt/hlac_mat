@@ -41,14 +41,9 @@ function batches = split_into_baches(img, nx, ny)
             x_end = (x + each_x - 1);
             y_end = (y + each_y - 1);
             
-            %if x_end > x_size && y_end > y_size % 中途半端なところで終わる場合はやめる 
-
-                c_img = img(y:y_end, x:x_end); 
-                
-
-                batches(:,:,i) = c_img;
-                i = i + 1;
-            %end
+            c_img = img(y:y_end, x:x_end); 
+            batches(:,:,i) = c_img;
+            i = i + 1;
         end
     end
 
