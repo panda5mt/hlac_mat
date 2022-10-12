@@ -58,6 +58,7 @@ tar_bin = ((rgb2gray(tar_img)) > 127);
 ref_hlac = extract_batchwise_hlac(ref_bin,hlac_filters,20,20);
 tar_hlac = extract_batchwise_hlac(tar_bin,hlac_filters,20,20);
 
+% グラフ描画用パラメータの用意
 ref_X = 1:size(ref_hlac, 2);
 ref_Y = 1:size(ref_hlac, 1);
 ref_Z = ref_hlac(ref_Y,ref_X);
