@@ -89,7 +89,7 @@ contourf(tar_X,tar_Y,tar_Z-ref_Z);
 title('difference');
 
 nexttile
-plot(ref_Y,hlac_angles);
+plot(ref_Y,real(hlac_angles));
 
 % figure(1);
 % tiledlayout(1,2);
