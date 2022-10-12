@@ -50,7 +50,7 @@ tar_img = img(1:colsize, (uint16(rowsize/2) + 1):rowsize, :);
 
 
 % 2値化する
-ncl = 2; % 1~3
+ncl = 1; % 1~3
 ref_bin = ref_img(:,:,ncl) > graythresh(ref_img(:,:,ncl)) ; 
 tar_bin = tar_img(:,:,ncl) > graythresh(tar_img(:,:,ncl)) ; 
 
@@ -123,20 +123,20 @@ im = image('CData',img,'XData',[1 ax.XLim],'YData',[1 ax.YLim]);
 im.AlphaData = 0.5;
 hold on
 p = 1;
-th = 0.08;
+th = 0.04;
 for y=1:y_each:y_lim
     for x=1:x_each:x_lim
         angle = real(hlac_angles(p));
         
         if angle > th
-            r = rectangle('Position',[x y x_each y_each]);
             if(angle <= 1 )
+                r = rectangle('Position',[x y x_each y_each]);
                 r.FaceColor = [0 angle 0 0.7];
+                r.EdgeColor = 'b';
+                r.LineWidth = 1;
             else
-                r.FaceColor = [0 1 0 0.7];
+
             end
-            r.EdgeColor = 'b';
-            r.LineWidth = 1;
             
         end
         p = p + 1;
