@@ -38,7 +38,7 @@ hlac_filters = { ...
 [img,cmap] = imread('./img/Spot_the_difference.png');
 img = (ind2rgb(img, cmap)); % rgbに変換
 
-%img = double(imread('./img/saize_gekimuzu.jpg')./255);
+%img = double(imread('./img/saize3.jpg')./255);
 
 % サイズ取得
 colsize = size(img,1); % 縦サイズ
@@ -50,14 +50,14 @@ tar_img = img(1:colsize, (uint16(rowsize/2) + 1):rowsize, :);
 
 
 % 2値化する
-ncl = 1; % 1~3
+ncl = 1; % 1~3 -> (r,g,b)
 ref_bin = ref_img(:,:,ncl) > graythresh(ref_img(:,:,ncl)) ; 
-tar_bin = tar_img(:,:,ncl) > graythresh(tar_img(:,:,ncl)) ; 
+tar_bin = tar_img(:,:,ncl) > graythresh(ref_img(:,:,ncl)) ; 
 
 
 %% HLAC特徴量を求める
-nx = 30;
-ny = 30;
+nx = 20;
+ny = 20;
 ref_hlac = extract_batchwise_hlac(ref_bin,hlac_filters, nx, ny);
 tar_hlac = extract_batchwise_hlac(tar_bin,hlac_filters, nx, ny);
 
@@ -123,7 +123,7 @@ im = image('CData',img,'XData',[1 ax.XLim],'YData',[1 ax.YLim]);
 im.AlphaData = 0.5;
 hold on
 p = 1;
-th = 0.04;
+th = 0.010;
 for y=1:y_each:y_lim
     for x=1:x_each:x_lim
         angle = real(hlac_angles(p));
@@ -135,7 +135,10 @@ for y=1:y_each:y_lim
                 r.EdgeColor = 'b';
                 r.LineWidth = 1;
             else
-
+%                 r = rectangle('Position',[x y x_each y_each]);
+%                 r.FaceColor = [0 1 0 0.7];
+%                 r.EdgeColor = 'r';
+%                 r.LineWidth = 1;
             end
             
         end
