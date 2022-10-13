@@ -38,7 +38,14 @@ hlac_filters = { ...
 [img,cmap] = imread('./img/Spot_the_difference.png');
 img = (ind2rgb(img, cmap)); % rgbに変換
 
-%img = double(imread('./img/saize3.jpg')./255);
+%img = imread('./img/saize3.jpg');
+
+% 浮動小数点イメージデータに変換する
+if 1 < max(img,[],'all') && 256 > max(img,[],'all')     % uint8だったら
+    img = double(img ./ 255);
+elseif 256 <= max(img,[],'all') && 65536 > max(img,[],'all') %uint16だったら
+    img = double(img ./ 65535);
+end
 
 % サイズ取得
 colsize = size(img,1); % 縦サイズ
