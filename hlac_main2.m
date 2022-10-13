@@ -45,14 +45,18 @@ colsize = size(img,1); % 縦サイズ
 rowsize = size(img,2); % 横サイズ
 
 % 画像を左右に2等分する
-ref_img = img(1:colsize, 1:uint16(rowsize/2), :);
-tar_img = img(1:colsize, (uint16(rowsize/2) + 1):rowsize, :);
+ref_img = img(1:colsize, 1:uint16(rowsize/2)-1, :);
+tar_img = img(1:colsize, uint16(rowsize/2):rowsize, :);
 
+% グレースケールへ
+% gray = R .* 0.3 + G .* 0.59 + B .* 0.11
+ref_gray = ref_img(:,:,1) .* 0.3 + ref_img(:,:,2) .* 0.59 + ref_img(:,:,3) .* 0.11;
+tar_gray = tar_img(:,:,1) .* 0.3 + tar_img(:,:,2) .* 0.59 + tar_img(:,:,3) .* 0.11;
 
-% 2値化する
-ncl = 2; % 1~3 -> (r,g,b)
-ref_bin = ref_img(:,:,ncl) > graythresh(ref_img(:,:,ncl)) ; 
-tar_bin = tar_img(:,:,ncl) > graythresh(ref_img(:,:,ncl)) ; 
+% 2値化する(OTSU)
+gthresh = graythresh(ref_gray);
+ref_bin = ref_gray > gthresh ; 
+tar_bin = tar_gray > gthresh ; 
 
 
 %% HLAC特徴量を求める
@@ -123,7 +127,7 @@ im = image('CData',img,'XData',[1 ax.XLim],'YData',[1 ax.YLim]);
 im.AlphaData = 0.5;
 hold on
 p = 1;
-th = 0.010;
+th = 0.012;
 for y=1:y_each:y_lim
     for x=1:x_each:x_lim
         angle = real(hlac_angles(p));
