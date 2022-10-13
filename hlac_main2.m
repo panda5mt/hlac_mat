@@ -50,7 +50,7 @@ tar_img = img(1:colsize, (uint16(rowsize/2) + 1):rowsize, :);
 
 
 % 2値化する
-ncl = 1; % 1~3 -> (r,g,b)
+ncl = 2; % 1~3 -> (r,g,b)
 ref_bin = ref_img(:,:,ncl) > graythresh(ref_img(:,:,ncl)) ; 
 tar_bin = tar_img(:,:,ncl) > graythresh(ref_img(:,:,ncl)) ; 
 
