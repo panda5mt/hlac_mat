@@ -45,8 +45,8 @@ colsize = size(img,1); % 縦サイズ
 rowsize = size(img,2); % 横サイズ
 
 % 画像を左右に2等分する
-ref_img = img(1:colsize, 1:uint16(rowsize/2)-1, :);
-tar_img = img(1:colsize, uint16(rowsize/2):rowsize, :);
+ref_img = img(1:colsize, 1:uint16(rowsize/2), :);
+tar_img = img(1:colsize, uint16(rowsize/2)+1:rowsize, :);
 
 % グレースケールへ
 % gray = R .* 0.3 + G .* 0.59 + B .* 0.11
@@ -127,7 +127,7 @@ im = image('CData',img,'XData',[1 ax.XLim],'YData',[1 ax.YLim]);
 im.AlphaData = 0.5;
 hold on
 p = 1;
-th = 0.012;
+th = 0.02;
 for y=1:y_each:y_lim
     for x=1:x_each:x_lim
         angle = real(hlac_angles(p));
