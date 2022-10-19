@@ -61,7 +61,7 @@ ref_gray = ref_img(:,:,1) .* 0.3 + ref_img(:,:,2) .* 0.59 + ref_img(:,:,3) .* 0.
 tar_gray = tar_img(:,:,1) .* 0.3 + tar_img(:,:,2) .* 0.59 + tar_img(:,:,3) .* 0.11;
 
 % 2値化する(OTSU)
-gthresh = graythresh(ref_gray);
+gthresh = 128/255;%graythresh(ref_gray);
 ref_bin = ref_gray > gthresh ; 
 tar_bin = tar_gray > gthresh ; 
 
