@@ -1,6 +1,6 @@
 function thresh = my_graythresh(img)
 
-    %img = im2double(img);
+    img = im2double(img);
     img = img .* 255;
 
     img = reshape(img,1,[]);
