@@ -41,11 +41,7 @@ img = (ind2rgb(img, cmap)); % rgbに変換
 %img = imread('./img/saize3.jpg');
 
 % 浮動小数点イメージデータに変換する
-if 1 < max(img,[],'all') && 256 > max(img,[],'all')     % uint8だったら
-    img = double(img ./ 255);
-elseif 256 <= max(img,[],'all') && 65536 > max(img,[],'all') %uint16だったら
-    img = double(img ./ 65535);
-end
+img = im2double(img);
 
 % サイズ取得
 colsize = size(img,1); % 縦サイズ
@@ -61,7 +57,7 @@ ref_gray = ref_img(:,:,1) .* 0.3 + ref_img(:,:,2) .* 0.59 + ref_img(:,:,3) .* 0.
 tar_gray = tar_img(:,:,1) .* 0.3 + tar_img(:,:,2) .* 0.59 + tar_img(:,:,3) .* 0.11;
 
 % 2値化する(OTSU)
-gthresh = 128/255;%graythresh(ref_gray);
+gthresh = my_graythresh(ref_gray); %graythresh(ref_gray);
 ref_bin = ref_gray > gthresh ; 
 tar_bin = tar_gray > gthresh ; 
 
