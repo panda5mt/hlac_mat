@@ -26,7 +26,7 @@ function hlac_batches = extract_batchwise_hlac(img, hlac_filters, nx, ny)
         img = batches(:,:,b);
         for i=1:size(hlac_filters,2) %hlac_filtersの要素2 = 総フィルタ数
             filter = cell2mat(hlac_filters(:,i)); % cellから行列に変換
-            feature_map = conv2(img, filter,'valid');
+            feature_map = my_conv2(img, filter,'valid');
             count = sum(feature_map == sum(filter,'all'),'all'); %マスクと一致する数を集計
             result = [result count];
         end
