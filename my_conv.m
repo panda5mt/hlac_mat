@@ -49,7 +49,7 @@ function h = my_conv(f, g, conv_type)
             len = length(f) + length(g) - 1;
     end
 
-    st_idx = fix((length(h) - len) / 2) + 1;    
+    st_idx = fix((length(h) - len + 1) / 2);  
     h = int32(h(st_idx:st_idx + len - 1));
 end
 
