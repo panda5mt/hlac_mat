@@ -28,12 +28,12 @@ function h = my_conv2(f, g, conv_type)
     while (2 * fft_len_x) < (size(f,2) + size(g,2) - 1)
         fft_len_x = fft_len_x * 2;
     end
-    fft_len_x = fft_len_x * 2;
+    fft_len_x = fft_len_x * 2 ;
 
     while (2 * fft_len_y) < (size(f,1) + size(g,1) - 1)
         fft_len_y = fft_len_y * 2;
     end
-    fft_len_y = fft_len_y * 2;
+    fft_len_y = fft_len_y * 2 ;
 
     % フーリエ変換で実装する
     Ff = fft2(f, fft_len_y,fft_len_x);% Ff = real(Ff);
@@ -44,7 +44,11 @@ function h = my_conv2(f, g, conv_type)
 
     % フーリエ逆変換
     h = ifft2(Fh);
-    
+    % フルサイズの取得
+    len_x = size(f,2) + size(g,2) - 1;
+    len_y = size(f,1) + size(g,1) - 1;
+    h = h(1:1+len_y-1, 1:1+len_x-1);
+    size(h)
     % same, valid, fullで分ける    
     switch conv_type
         case 'same'
@@ -53,19 +57,16 @@ function h = my_conv2(f, g, conv_type)
         case 'valid'
             len_x = max(size(f,2)-size(g,2) + 1, 0);
             len_y = max(size(f,1)-size(g,1) + 1, 0);
-            %len_y = size(f,1) + size(g,1) - 1;
-        case 'full'
-            len_x = size(f,2) + size(g,2) - 1;
-            len_y = size(f,1) + size(g,1) - 1;
-        otherwise
-            len_x = size(f,2) + size(g,2) - 1;
-            len_y = size(f,1) + size(g,1) - 1;
+%         case 'full'
+%             len_x = size(f,2) + size(g,2) - 1;
+%             len_y = size(f,1) + size(g,1) - 1;
+%         otherwise
+%             len_x = size(f,2) + size(g,2) - 1;
+%             len_y = size(f,1) + size(g,1) - 1;
     end
 
-    st_x = fix((fix(size(h,2)/2) - len_x + 1) / 2)+1 ; %if (st_x == 0); st_x = 1; end 
-    st_y = fix((fix(size(h,1)/2) - len_y + 1) / 2)+1 ; %if (st_y == 0); st_y = 1; end
-    
-
+    st_x = ceil((size(h, 2) - len_x) / 2) + 1;
+    st_y = ceil((size(h, 1) - len_y) / 2) + 1;
     h = int32(h(st_y:st_y + len_y - 1, st_x:st_x + len_x - 1));
 end
 
