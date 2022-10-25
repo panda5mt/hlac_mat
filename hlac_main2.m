@@ -130,7 +130,7 @@ im = image('CData',img,'XData',[1 ax.XLim],'YData',[1 ax.YLim]);
 im.AlphaData = 0.5;
 hold on
 p = 1;
-th = 0.02;
+th = 0.04;
 for y=1:y_each:y_lim
     for x=1:x_each:x_lim
         angle = real(hlac_angles(p));

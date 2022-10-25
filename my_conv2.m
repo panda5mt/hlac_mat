@@ -48,7 +48,7 @@ function h = my_conv2(f, g, conv_type)
     len_x = size(f,2) + size(g,2) - 1;
     len_y = size(f,1) + size(g,1) - 1;
     h = h(1:1+len_y-1, 1:1+len_x-1);
-    size(h)
+    
     % same, valid, fullで分ける    
     switch conv_type
         case 'same'
