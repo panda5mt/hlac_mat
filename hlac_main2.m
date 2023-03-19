@@ -78,10 +78,10 @@ tar_Y = 1:size(tar_hlac, 1);
 tar_Z = tar_hlac(tar_Y,tar_X);
 
 %% 内積を求める
-hlac_angles = [];
+hlac_angles = zeros(size(ref_Y));
 for i=ref_Y
     ha = vector_angle(ref_hlac(i,:), tar_hlac(i,:), 1e-6);
-    hlac_angles = [hlac_angles ha]; 
+    hlac_angles(i) = ha; 
 end
 
 %% 描画

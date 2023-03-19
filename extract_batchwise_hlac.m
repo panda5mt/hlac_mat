@@ -18,9 +18,10 @@ function hlac_batches = extract_batchwise_hlac(img, hlac_filters, nx, ny)
 %   マスク(フィルタ)との一致回数
     batches = split_into_baches((img), nx, ny);
     b_size = size(batches,3); % バッチ総数
+    n_filters = size(hlac_filters,2); % フィルタ総数
 
-    result = [];
-    hlac_batches = [];
+    result = zeros(1, n_filters);
+    hlac_batches = zeros(b_size, n_filters);
 
     for b=1:b_size
         img = batches(:,:,b);
@@ -28,10 +29,10 @@ function hlac_batches = extract_batchwise_hlac(img, hlac_filters, nx, ny)
             filter = cell2mat(hlac_filters(:,i)); % cellから行列に変換
             feature_map = my_conv2(img, filter,'valid');
             count = sum(feature_map == sum(filter,'all'),'all'); %マスクと一致する数を集計
-            result = [result count];
+            result(i) = count;
         end
-        hlac_batches = [hlac_batches; result];
-        result = [];
+        hlac_batches(b,:) = result;
+        result = zeros(1, n_filters);
     end
     
 end

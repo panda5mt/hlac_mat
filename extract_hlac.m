@@ -15,7 +15,7 @@ function num_matches = extract_hlac(img,hlac_filters)
 % num_matches : vector(numeric)
 %   マスク(フィルタ)との一致回数
 
-result = [];
+result = zeros(1,size(hlac_filters,2));
 img = uint8(img);
 %hlac_filters = uint8(hlac_filters);
 
@@ -23,7 +23,7 @@ for i=1:size(hlac_filters,2) %hlac_filtersの要素2 = 総フィルタ数
     filter = cell2mat(hlac_filters(:,i)); % cellから行列に変換
     feature_map = my_conv2(img, filter,'valid');
     count = sum(feature_map == sum(filter,'all'),'all'); %マスクと一致する数を集計
-    result = [result count];
+    result(i) = count;
 end
 num_matches = result;
 
